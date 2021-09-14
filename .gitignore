@@ -1,0 +1,7 @@
+# Vagrant as Infrastructure
+.inventory
+.ssh-config
+.vagrant
+ansible.cfg
+.etc-hosts.yml
+roles/

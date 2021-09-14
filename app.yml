@@ -1,0 +1,87 @@
+---
+
+- name: Install Omicron
+  hosts: omicron-app
+
+  vars:
+    packages: 
+      - nginx
+      - python3
+      - python3-pip
+      - python36-virtualenv
+    pgsql_major_version: '12'
+    username: omicron
+    git: false
+
+  roles:
+    - name: uclalib_role_postgresql
+
+  tasks:
+    - name: Install EPEL
+      package:
+        name: 'epel-release'
+        state: present
+      become: true
+      tags:
+        - epel
+
+    - name: Install Initial Packages
+      package:
+        name: '{{ packages }}'
+        state: present
+      become: true
+
+    - name: Create dedicated app group
+      group:
+        name: '{{ groupname | default (username) }}'
+        state: present
+      become: true
+
+    - name: Create dedicted app user
+      user:
+        name: '{{ username }}'
+        group: '{{ groupname | default (username) }}'
+        groups: 'nginx'
+        comment: 'Omicron'
+        state: present
+      become: true
+
+
+    - name: Create application directory
+      file:
+        name: '{{ application_dir | default ("/opt/omicron") }}'
+        state: directory
+        owner: '{{ username }}'
+        group: '{{ groupname | default (username) }}'
+      become: true
+
+    - name: Clone Omicron respository
+      git:
+        dest: '{{ application_dir | default ("/opt/omicron") }}'
+        repo: 'git@github.com:UCLALibrary/omicron.git'
+      become: true
+      become_user: '{{ username }}'
+      when: git
+
+    - name: Copy Omicron repository
+      synchronize:
+        src: 'omicron/'
+        dest: '{{ application_dir | default ("/opt/omicron") }}'
+        use_ssh_args: true
+        owner: false
+        group: false
+      become: true
+      become_user: '{{ username }}'
+      when: not git
+
+    - name: Create Python Virtualenv
+      pip:
+        virtualenv: 'omicron-venv'
+        chdir: '{{ application_dir | default ("/opt/omicron") }}'
+        requirements: 'omicron/requirements.txt'
+        virtualenv_command: 'virtualenv-3'
+      become: true
+      become_user: '{{ username }}'
+
+
+

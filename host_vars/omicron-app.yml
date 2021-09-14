@@ -1,0 +1,14 @@
+---
+
+packages:
+  - nginx
+  - python3
+  - python3-pip
+  - python36-virtualenv
+username: omicron
+git: false
+
+pgsql_host: 'omicron-db'
+pgsql_user: 'omicronuser'
+pgsql_pass: 'secret'
+pgsql_name: 'omicrondb'

@@ -1,0 +1,3 @@
+[submodule "omicron"]
+	path = omicron
+	url = git@github.com:UCLALibrary/omicron.git
