@@ -8,7 +8,25 @@ packages:
 username: omicron
 git: false
 
-pgsql_host: 'omicron-db'
-pgsql_user: 'omicronuser'
-pgsql_pass: 'secret'
-pgsql_name: 'omicrondb'
+# pgsql
+pgsql_host: '{{ omicron_db_host }}'
+pgsql_user: '{{ omicron_db_user }}'
+pgsql_pass: '{{ omicron_db_pass }}'
+pgsql_name: '{{ omicron_db_name }}'
+
+# omicron
+
+omicron_allowed_hosts:
+  - localhost
+
+omicron_db_host: omicron-db
+omicron_db_name: omicrondb
+omicron_db_user: omicronuser
+omicron_db_pass: secret
+
+omicron_secret_key: 'django-insecure-kx**_21x7!dna8(d^a=vj_%6ymjiewbbf-qu!qn*4e@dmijv1&'
+omicron_debug: 'True'
+omicron_session_cookie_age: '60 * 60 * 4'
+omicron_superuser_name: 'omicron'
+omicron_superuser_email: 'omicron@omicr.on'
+omicron_superuser_password: 'only-mildly-secret'
