@@ -55,7 +55,7 @@
 
     - name: Copy Omicron repository
       synchronize:
-        src: 'omicron/'
+        src: 'omicron'
         dest: '{{ application_dir | default ("/opt/omicron") }}'
         use_ssh_args: true
         owner: false
