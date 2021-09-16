@@ -11,15 +11,12 @@
       selinux:
         state: disabled
       become: true
-      tags: selinux
 
     - name: Install EPEL
       package:
         name: 'epel-release'
         state: present
       become: true
-      tags:
-        - epel
 
     - name: Install Initial Packages
       package:
@@ -134,7 +131,6 @@
       loop:
         - nginx/conf.d/omicron_socket.conf
         - nginx/default.d/omicron.conf
-      tags: doit
 
     - name: Create Omicron Daphne systemd service
       template:
@@ -143,7 +139,6 @@
       become: true
       loop:
         - omicron.service
-      tags: doit
 
     - name: Enable and start Omicron services
       service:
@@ -154,4 +149,3 @@
       loop:
         - omicron
         - nginx
-      tags: service
