@@ -71,7 +71,7 @@
 
     - name: Fix ownership of copied repository
       file:
-        path: '{{ application_dir | default ("/opt/omicron") }}'
+        path: '{{ application_dir | default ("/opt/omicron") }}/omicron'
         owner: '{{ username }}'
         group: '{{ groupname | default (username) }}'
         recurse: true
