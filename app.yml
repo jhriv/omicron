@@ -46,12 +46,14 @@
         state: directory
         owner: '{{ username }}'
         group: '{{ groupname | default (username) }}'
+        mode: '0755'
       become: true
 
     - name: Clone Omicron respository
       git:
         dest: '{{ application_dir | default ("/opt/omicron") }}'
         repo: 'git@github.com:UCLALibrary/omicron.git'
+        version: 'main'
       become: true
       become_user: '{{ username }}'
       when: git
@@ -90,6 +92,7 @@
         src: '{{ item }}.j2'
         owner: '{{ username }}'
         group: '{{ groupname | default (username) }}'
+        mode: '0400'
       become: true
       become_user: '{{ username }}'
       loop:
@@ -127,6 +130,7 @@
       template:
         dest: '/etc/{{ item }}'
         src: '{{ item }}.j2'
+        mode: '0444'
       become: true
       loop:
         - nginx/conf.d/omicron_socket.conf
@@ -136,6 +140,7 @@
       template:
         dest: /etc/systemd/system/{{ item }}
         src: '{{ item }}.j2'
+        mode: '0444'
       become: true
       loop:
         - omicron.service
