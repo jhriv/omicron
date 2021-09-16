@@ -154,6 +154,7 @@
         cmd: semanage fcontext -a -t httpd_var_run_t /var/run/omicron/omicron.sock
       become: true
       when: '"httpd_var_run_t" not in socket_context.stdout'
+      notify: Restore Contexts
       tags: selinux
 
     - name: Enable and start Omicron services
@@ -166,3 +167,11 @@
         - omicron
         - nginx
       tags: service
+
+  handlers:
+    - name: Restore Contexts
+      command:
+        cmd: restorecon -R -v /run/omicron/omicron.sock
+      become: true
+      changed_when: true
+      tags: selinux
