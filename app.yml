@@ -155,3 +155,14 @@
       become: true
       when: '"httpd_var_run_t" not in socket_context.stdout'
       tags: selinux
+
+    - name: Enable and start Omicron services
+      service:
+        name: '{{ item }}'
+        enabled: true
+        state: started
+      become: true
+      loop:
+        - omicron
+        - nginx
+      tags: service
