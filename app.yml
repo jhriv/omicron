@@ -7,6 +7,12 @@
     - name: uclalib_role_postgresql
 
   tasks:
+    - name: Disable SELinux
+      selinux:
+        state: disabled
+      become: true
+      tags: selinux
+
     - name: Install EPEL
       package:
         name: 'epel-release'
@@ -139,24 +145,6 @@
         - omicron.service
       tags: doit
 
-    - name: Get socket SELinux context
-      command:
-        cmd: semanage fcontext --noheading --list --locallist /var/run/omicron/omicron.sock
-      become: true
-      check_mode: false
-      changed_when: false
-      register: socket_context
-      tags: selinux
-
-    - name: 'Allow Nginx to read socket (SELinux context)'
-      # alternative: disable SELinux
-      command:
-        cmd: semanage fcontext -a -t httpd_var_run_t /var/run/omicron/omicron.sock
-      become: true
-      when: '"httpd_var_run_t" not in socket_context.stdout'
-      notify: Restore Contexts
-      tags: selinux
-
     - name: Enable and start Omicron services
       service:
         name: '{{ item }}'
@@ -167,11 +155,3 @@
         - omicron
         - nginx
       tags: service
-
-  handlers:
-    - name: Restore Contexts
-      command:
-        cmd: restorecon -R -v /run/omicron/omicron.sock
-      become: true
-      changed_when: true
-      tags: selinux
