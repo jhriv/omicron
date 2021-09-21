@@ -1,0 +1,16 @@
+---
+
+- name: Install Omicron
+  hosts: omicron-role-app
+
+  pre_tasks:
+    - name: Disable SELinux
+      selinux:
+        state: disabled
+      become: true
+
+  roles:
+    - name: uclalib_role_postgresql
+    - name: uclalib_role_epel
+      become: true
+    - name: uclalib_role_omicron

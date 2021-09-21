@@ -1,0 +1,18 @@
+---
+
+roles:
+  - name: uclalib_role_postgresql
+    src: https://github.com/UCLALibrary/uclalib_role_postgresql.git
+    scm: git
+    version: 9f377997c037d9ec661daeed541c1cf5512102d1
+    # HEAD as of 2021-08-25
+
+  - name: uclalib_role_omicron
+    src: https://github.com/UCLALibrary/uclalib_role_omicron.git
+    scm: git
+    version: HEAD
+
+  - name: uclalib_role_epel
+    src: https://github.com/UCLALibrary/uclalib_role_epel.git
+    scm: git
+    version: HEAD

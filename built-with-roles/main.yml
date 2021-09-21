@@ -1,0 +1,5 @@
+---
+
+- import_playbook: db.yml
+- import_playbook: snakeoil.yml
+- import_playbook: app.yml

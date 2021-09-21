@@ -1,0 +1,7 @@
+---
+
+- name: Omicron Database (PGSQL)
+  hosts: omicron-role-db
+
+  roles:
+    - name: uclalib_role_postgresql
