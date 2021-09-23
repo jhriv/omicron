@@ -11,6 +11,7 @@
 
   roles:
     - name: uclalib_role_postgresql
+      delegate_to: omicron-role-db
     - name: uclalib_role_epel
       become: true
     - name: uclalib_role_omicron
