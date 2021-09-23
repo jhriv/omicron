@@ -9,6 +9,11 @@ pgsql_name: '{{ omicron_db_name }}'
 omicron_version: 'b1fd22be1747bcb91537e709ab5fdc8b7fc3ed8d'
 omicron_db_host: 'omicron-role-db'
 
+omicron_allowed_hosts:
+  - 'localhost'
+  - 'p-u-eww'
+  - '127.0.0.1'
+
 git_access_token: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           30396231363636333737623035353133306537636638303731373737306666656233363365316339
